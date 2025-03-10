@@ -6,4 +6,5 @@ builds/desktop/main
 builds/web/index.html
 builds/web/index.js
 builds/web/index.wasm
+builds/web/index.data
 builds/web.zip
