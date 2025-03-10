@@ -3,22 +3,39 @@
 #include <iostream>
 #include <vector>
 
-Game::Game(int window_width, int window_height) {
-    this->window_height = window_height;
-    this->window_width = window_width;
+Game::Game(int windowWidth, int windowHeight, bool playMusic) {
+    this->windowHeight = windowHeight;
+    this->windowWidth = windowWidth;
+    this->playMusic = playMusic;
 }
 
 void Game::LoadAssets() {
     // Load in visuals
-    std::vector<std::string> asset_names = {"ship", "star", "asteroid", "black_hole", "background"};
-    for(std::string key : asset_names) {
+    for(std::string key : {"ship", "star", "asteroid", "black_hole", "background"}) {
         // Load the image
         images.insert(std::pair<std::string, Image>(key, LoadImage((BASE_IMG_PATH + key + ".png").c_str())));
 
         // From the image, recolor and then load texture
         textures.insert(std::pair<std::string, Texture2D>(key, UtilLoadImageToTexture(&images[key])));
     }
-    
+
+    // Add in the icon image (don't need a texture here)
+    images.insert(std::pair<std::string, Image>("icon", LoadImage((BASE_IMG_PATH + "icon.png").c_str())));
+    SetWindowIcon(images["icon"]);
+
+    // Load in audio
+    for(std::string key : {"explosion", "engine"}) {
+        sounds.insert(std::pair<std::string, Sound>(key, LoadSound((BASE_SOUND_PATH + key + ".wav").c_str())));
+    }
+
+    // Load audio stream and kick off
+    stream = LoadMusicStream((BASE_SOUND_PATH + "music.wav").c_str());
+    stream.looping = true;
+
+    if(playMusic && IsMusicValid(stream)) {
+        PlayMusicStream(stream);
+    }
+        
 }
 
 void Game::UnloadAssets() {
@@ -31,6 +48,14 @@ void Game::UnloadAssets() {
     for (const auto &imagePair : images) {
         UnloadImage(imagePair.second);
     }
+
+    // Unload the sound
+    for (const auto &soundPair : sounds) {
+        UnloadSound(soundPair.second);
+    }
+
+    // Unload the music
+    UnloadMusicStream(stream);
 }
 
 void Game::HandleInput() {
@@ -38,7 +63,9 @@ void Game::HandleInput() {
 }
 
 void Game::Update() {
-    // TODO
+    if(playMusic && IsMusicValid(stream)) {
+        UpdateMusicStream(stream);
+    }
 }
 
 void Game::Render() {

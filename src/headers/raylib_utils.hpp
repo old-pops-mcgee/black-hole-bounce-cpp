@@ -5,4 +5,5 @@
 Texture2D UtilLoadImageToTexture(Image *img);
 
 const std::string BASE_IMG_PATH = "assets/images/";
+const std::string BASE_SOUND_PATH = "assets/sound/";
 const Color COLOR_KEY = (Color){255, 174, 201, 255};
