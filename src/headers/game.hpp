@@ -7,12 +7,13 @@ class Game {
     public:
         Game(int window_width, int window_height);
         void LoadAssets();
+        void UnloadAssets();
         void HandleInput();
         void Update();
         void Render();
-        ~Game();
     private:
         int window_width;
         int window_height;
-        std::map<std::string, Texture2D> images;
+        std::map<std::string, Image> images;
+        std::map<std::string, Texture2D> textures;
 };

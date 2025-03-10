@@ -17,5 +17,6 @@ int main() {
         game.Render();
     }
 
+    game.UnloadAssets();
     CloseWindow();
 }
