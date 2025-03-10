@@ -1,0 +1,9 @@
+# VS Code info
+.vscode
+
+# Artifacts from build (leaves folders to ensure Makefile has targets)
+builds/desktop/main
+builds/web/index.html
+builds/web/index.js
+builds/web/index.wasm
+builds/web.zip
