@@ -4,6 +4,7 @@
 #include <vector>
 #include <cstdlib>
 #include <math.h>
+#include "raylib_utils.hpp"
 
 class Entity;
 class Asteroid;
@@ -59,24 +60,27 @@ class BlackHole : public Entity {
 class ExplosionCluster : public Entity {
     public:
         ExplosionCluster(Game *game, Vector2 pos, int explosionCount);
+        void update();
+        void render();
     private:
         Game *game;
         Vector2 pos;
-        std::vector<Explosion> explosions;
+        std::vector<Explosion *> explosions;
 };
 
 class Explosion : public Entity {
     public:
-        Explosion(ExplosionCluster *cluster, Vector2 pos, float angle, float speed);
+        Explosion(Vector2 pos, float angle, float speed);
         void update();
         void render();
+        bool getShouldKill();
     private:
         const std::vector<Color> colorChoice = {RED, ORANGE, YELLOW, GOLD};
-        ExplosionCluster *cluster;
         Vector2 pos;
         float angle;
         float speed;
         Color color;
+        bool shouldKill;
 };
 
 class Ship : public Entity {
