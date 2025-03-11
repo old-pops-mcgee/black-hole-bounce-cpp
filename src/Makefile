@@ -1,4 +1,4 @@
-OBJS = main.cpp game.cpp utilities/*.cpp
+OBJS = main.cpp game.cpp utilities/*.cpp entities/*.cpp
 
 OBJ_NAME = main
 

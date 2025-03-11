@@ -25,7 +25,6 @@ int main(int argc, char** argv) {
     SetAudioStreamBufferSizeDefault(4096);
     SetTargetFPS(60);
     Game game = Game(WINDOW_WIDTH, WINDOW_HEIGHT, playMusic);
-    game.LoadAssets();
 
     while(!WindowShouldClose()) {
         game.HandleInput();

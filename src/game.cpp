@@ -7,6 +7,10 @@ Game::Game(int windowWidth, int windowHeight, bool playMusic) {
     this->windowHeight = windowHeight;
     this->windowWidth = windowWidth;
     this->playMusic = playMusic;
+    this->state = START;
+
+    LoadAssets();
+
 }
 
 void Game::LoadAssets() {
@@ -56,6 +60,10 @@ void Game::UnloadAssets() {
 
     // Unload the music
     UnloadMusicStream(stream);
+}
+
+void Game::ReloadGameComponents() {
+    // TODO
 }
 
 void Game::HandleInput() {
