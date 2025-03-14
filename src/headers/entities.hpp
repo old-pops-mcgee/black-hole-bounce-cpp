@@ -86,18 +86,23 @@ class Explosion : public Entity {
 class Ship : public Entity {
     public:
         Ship(Game *game, Vector2 pos, float radius, Color color, Texture2D *texture);
+        void render();
+        void update();
         void increaseSpeed();
         void decreaseSpeed();
     private:
+        const float MAX_SPEED = 5.0;
+        const float MAX_ENGINE_SPEED = 50.0;
         Game *game;
         Vector2 pos;
         float radius;
         Color color;
+        float angle;
         Texture2D *texture;
         Vector2 velocity;
         float engineSpeed;
         std::vector<Vector3> vaporTrail;
-        bool isDead;
+        bool isDead;        
 };
 
 class Star : public Entity {
