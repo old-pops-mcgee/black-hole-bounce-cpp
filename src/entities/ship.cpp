@@ -54,10 +54,8 @@ void Ship::update() {
         std::vector<Vector3>::iterator it = vaporTrail.begin();
         std::cout << vaporTrail.size() << std::endl;
         while(it != vaporTrail.end()) {
-            Vector3 vaporDot = *it;
-            std::cout << vaporDot.z << std::endl;
-            vaporDot.z -= 0.1f;
-            if(vaporDot.z <= 0.01f) {
+            it->z -= 0.1f;
+            if(it->z <= 0.01f) {
                 it = vaporTrail.erase(it);
             } else {
                 it++;
