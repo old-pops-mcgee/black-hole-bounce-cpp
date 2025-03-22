@@ -28,7 +28,52 @@ void Ship::render() {
 }
 
 void Ship::update() {
-    // TODO
+    if(!this->isDead) {
+        this->engineSpeed = std::min(this->MAX_ENGINE_SPEED, this->engineSpeed);
+
+        // TODO: Play engine sound or stop engine sound
+        
+        if(this->pos.y < 0 || this->pos.y > this->game->getWindowHeight() || this->pos.x < 0 || this->pos.x > this->game->getWindowWidth()) {
+            this->isDead = true;
+            return;
+        }
+
+        // TODO: Check collisions with objects
+
+        // TODO: Calculate the velocity updates from black holes
+        
+        // Calculate new position
+        this->pos.x = cos(this->angle)*this->engineSpeed + this->pos.x;
+        this->pos.y = sin(this->angle)*this->engineSpeed + this->pos.y;
+        
+        // Cap velocities so we don't get TOO crazy
+        this->velocity.x += cos(this->angle)*this->engineSpeed + this->velocity.x;
+        this->velocity.y += sin(this->angle)*this->engineSpeed + this->velocity.y;
+
+        // Update the vapor trail
+        std::vector<Vector3>::iterator it = vaporTrail.begin();
+        std::cout << vaporTrail.size() << std::endl;
+        while(it != vaporTrail.end()) {
+            Vector3 vaporDot = *it;
+            std::cout << vaporDot.z << std::endl;
+            vaporDot.z -= 0.1f;
+            if(vaporDot.z <= 0.01f) {
+                it = vaporTrail.erase(it);
+            } else {
+                it++;
+            }
+        }
+
+        // Add new vapor dots
+        float vaporFudgeFactor = (getRandomFloat() - 0.5) * 8.0;
+        float theta = (PI/2) - this->angle;
+        Vector3 newVaporDot = Vector3 {
+            this->pos.x - (this->texture->height + vaporFudgeFactor)*sin(theta)/2,
+            this->pos.y - (this->texture->height + vaporFudgeFactor)*cos(theta)/2,
+            this->engineSpeed / 2.0f
+        };
+        this->vaporTrail.push_back(newVaporDot);
+    }
 }
 
 void Ship::increaseSpeed() {
@@ -37,4 +82,12 @@ void Ship::increaseSpeed() {
 
 void Ship::decreaseSpeed() {
     engineSpeed -= 0.1f;
+}
+
+void Ship::turnRight() {
+    angle += PI/60;
+}
+
+void Ship::turnLeft() {
+    angle -= PI/60;
 }

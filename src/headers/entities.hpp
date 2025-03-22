@@ -5,7 +5,10 @@
 #include <cstdlib>
 #include <math.h>
 #include "raylib_utils.hpp"
+#include <algorithm>
+#include <iostream>
 
+class Game;
 class Entity;
 class Asteroid;
 class BlackHole;
@@ -90,6 +93,8 @@ class Ship : public Entity {
         void update();
         void increaseSpeed();
         void decreaseSpeed();
+        void turnRight();
+        void turnLeft();
     private:
         const float MAX_SPEED = 5.0;
         const float MAX_ENGINE_SPEED = 50.0;
